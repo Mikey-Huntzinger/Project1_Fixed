@@ -18,6 +18,7 @@ public class Reader {
         this.cardNumber = cardNumber;
         this.name = name;
         this.phone = phone;
+        this.books = new java.util.ArrayList<>();
     }
 
     public Code addBook(Book book){
@@ -60,8 +61,8 @@ public class Reader {
         return cardNumber;
     }
 
-    public void setCardNumber(){
-        CARD_NUMBER_ = cardNumber;
+    public void setCardNumber(int cardNumber){
+        this.cardNumber = cardNumber;
     }
 
     public String getName() {
@@ -76,7 +77,7 @@ public class Reader {
         return phone;
     }
 
-    public void setPhone(){
+    public void setPhone(String phone){
         this.phone = phone;
     }
 

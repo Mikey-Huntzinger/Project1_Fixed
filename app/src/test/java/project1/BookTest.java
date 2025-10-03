@@ -1,156 +1,189 @@
 package project1;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.time.LocalDate;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 /**
- * Test class for the Book object
+ * @author Andrea Ultreras
+ * @since 2021.02.15
+ * Abstract: This file holds test variables and objects as well as
+ *           tests for the constructor and getters and setters.
+ *
+ * This test was written by an excellent student.
+ *
  */
-public class BookTest {
+class BookTest {
+    Book book;
+    Book book1;
+    Book book2;
+    Book book3;
+    Book book4;
+    String ISBN;
+    String Title;
+    String Subject;
+    int PageCount;
+    String Author;
+    LocalDate DueDate;
+    String ISBN_;
+    String Title_;
+    String Subject_;
+    int PageCount_;
+    String Author_;
+    LocalDate DueDate_;
 
-    // A Book instance that will be created before each test runs.
-    private Book book;
-
-    // Variables holding the expected initial values for our book.
-    private final String expectedAuthor = "George Orwell";
-    private final LocalDate expectedDueDate = LocalDate.of(2024, 10, 31);
-    private final String expectedIsbn = "978-0451524935";
-    private final int expectedPageCount = 328;
-    private final String expectedSubject = "Dystopian Fiction";
-    private final String expectedTitle = "1984";
-
-    /**
-     * This method runs BEFORE EACH @Test method in this class.
-     * It sets up a fresh Book instance to ensure tests are isolated.
-     */
+    //CONSTRUCTOR & DESTRUCTOR-----------------------------------------------------------
     @BeforeEach
     void setUp() {
-        book = new Book(
-                expectedAuthor,
-                expectedDueDate,
-                expectedIsbn,
-                expectedPageCount,
-                expectedSubject,
-                expectedTitle
-        );
+        //constructor test---
+        book = null;
+        assertNull(book);
+        book = new Book("", "", "", 0, "", LocalDate.of(2021, 2, 10));
+        assertNotNull(book);
+
+        //field setting and getter test---
+        ISBN = "1337";
+        Title = "Headfirst Java";
+        Subject = "education";
+        PageCount = 1337;
+        Author = "Grady Booch";
+        DueDate = LocalDate.of(2002, 1, 8);
+        book1 = new Book(ISBN, Title, Subject, PageCount, Author, DueDate);
+
+        //equality test---
+        book2 = new Book("5297", "Count of Monte Cristo", "Adventure", 999, "Alexandrea Dumas", LocalDate.of(2021, 1, 1));
+        book3 = new Book("5297", "Count of Monte Cristo", "Adventure", 999, "Alexandrea Dumas", LocalDate.of(2021, 1, 1));
+
+        //setter test---
+        book4 = new Book(ISBN, Title, Subject, PageCount, Author, DueDate);
+        ISBN_ = "34-w-34";
+        Title_ = "Dune";
+        Subject_ = "sci-fi";
+        PageCount_ = 235;
+        Author_ = "Frank Herbert";
+        DueDate_ = LocalDate.of(2020, 5, 12);
     }
 
-    // Constructor and Getter Tests
-
-    @Test
-    void testGetAuthor() {
-        assertEquals(expectedAuthor, book.getAuthor(), "getAuthor should return the value set by the constructor.");
+    @AfterEach
+    void tearDown() {
+        book = null;
+        book1 = null;
+        book2 = null;
+        book3 = null;
+        book4 = null;
+        ISBN = null;
+        Title = null;
+        Subject = null;
+        PageCount = 0;
+        Author = null;
+        DueDate = null;
     }
 
-    @Test
-    void testGetDueDate() {
-        assertEquals(expectedDueDate, book.getDueDate(), "getDueDate should return the value set by the constructor.");
-    }
+    //GETTERS AND SETTERS----------------------------------------------------------------
 
     @Test
-    void testGetIsbn() {
-        assertEquals(expectedIsbn, book.getIsbn(), "getIsbn should return the value set by the constructor.");
-    }
-
-    @Test
-    void testGetPageCount() {
-        assertEquals(expectedPageCount, book.getPageCount(), "getPageCount should return the value set by the constructor.");
-    }
-
-    @Test
-    void testGetSubject() {
-        assertEquals(expectedSubject, book.getSubject(), "getSubject should return the value set by the constructor.");
-    }
-
-    @Test
-    void testGetTitle() {
-        assertEquals(expectedTitle, book.getTitle(), "getTitle should return the value set by the constructor.");
-    }
-
-    // Setter Tests
-
-    @Test
-    void testSetAuthor() {
-        String newAuthor = "J.R.R. Tolkien";
-        book.setAuthor(newAuthor);
-        assertEquals(newAuthor, book.getAuthor(), "setAuthor should update the author.");
-    }
-
-    @Test
-    void testSetDueDate() {
-        LocalDate newDueDate = LocalDate.of(2025, 1, 1);
-        book.setDueDate(newDueDate);
-        assertEquals(newDueDate, book.getDueDate(), "setDueDate should update the due date.");
-    }
-
-    @Test
-    void testSetIsbn() {
-        String newIsbn = "978-0618640157";
-        book.setIsbn(newIsbn);
-        assertEquals(newIsbn, book.getIsbn(), "setIsbn should update the ISBN.");
+    void staticTest(){
+        assertEquals(0, Book.ISBN_);
+        assertEquals(1, Book.TITLE_);
+        assertEquals(2, Book.SUBJECT_);
+        assertEquals(3, Book.PAGE_COUNT_);
+        assertEquals(4, Book.AUTHOR_);
+        assertEquals(5, Book.DUE_DATE_);
     }
 
     @Test
-    void testSetPageCount() {
-        int newPageCount = 1178;
-        book.setPageCount(newPageCount);
-        assertEquals(newPageCount, book.getPageCount(), "setPageCount should update the page count.");
+    void getISBN() {
+        assertEquals(ISBN, book1.getISBN());                //field setting and getter test
+        assertNotEquals(book1.getISBN(), book2.getISBN());  //equality test
+        assertEquals(book2.getIsbn(), book3.getISBN());     //equality test
     }
 
     @Test
-    void testSetSubject() {
-        String newSubject = "High Fantasy";
-        book.setSubject(newSubject);
-        assertEquals(newSubject, book.getSubject(), "setSubject should update the subject.");
+    void setISBN() {
+        book4.setISBN(ISBN_);                   //set value to new parameter, setter test
+        assertNotEquals(ISBN, book4.getISBN()); //setter test
+        assertEquals(ISBN_, book4.getISBN());   //setter test
     }
 
     @Test
-    void testSetTitle() {
-        String newTitle = "The Lord of the Rings";
-        book.setTitle(newTitle);
-        assertEquals(newTitle, book.getTitle(), "setTitle should update the title.");
+    void getTitle() {
+        assertEquals(Title, book1.getTitle());
+        assertNotEquals(book1.getTitle(), book2.getTitle());
+        assertEquals(book2.getTitle(), book3.getTitle());
     }
 
-    // Equals and HashCode tests
     @Test
-    void testBookEquality() {
-        // Step 1: Create an instance of a Book with given values.
-        Book book1 = new Book(
-                "George Orwell",
-                LocalDate.of(2024, 10, 31),
-                "978-0451524935",
-                328,
-                "Dystopian Fiction",
-                "1984"
-        );
+    void setTitle() {
+        book4.setTitle(Title_);
+        assertNotEquals(Title, book4.getTitle());
+        assertEquals(Title_, book4.getTitle());
+    }
 
-        // Step 2: Create an instance of a Book with DIFFERENT values.
-        Book bookWithDifferentValues = new Book(
-                "J.R.R. Tolkien",
-                LocalDate.of(2025, 12, 25),
-                "978-0618640157",
-                432,
-                "Fantasy",
-                "The Hobbit"
-        );
+    @Test
+    void getSubject() {
+        assertEquals(Subject, book1.getSubject());
+        assertNotEquals(book1.getSubject(), book2.getSubject());
+        assertEquals(book2.getSubject(), book3.getSubject());
+    }
 
-        // Step 3: Ensure that they are NOT equal.
-        assertNotEquals(book1, bookWithDifferentValues, "Books with different data should not be equal.");
+    @Test
+    void setSubject() {
+        book4.setSubject(Subject_);
+        assertNotEquals(Subject, book4.getSubject());
+        assertEquals(Subject_, book4.getSubject());
+    }
 
-        // Step 4: Create a new instance of Book with the same values as one of the previous.
-        // This is NOT an alias (book3 = book1), but a distinct object in memory.
-        Book bookWithSameValues = new Book(
-                "George Orwell",
-                LocalDate.of(2024, 10, 31), // Note: The date is different but excluded from equals()
-                "978-0451524935",
-                328,
-                "Dystopian Fiction",
-                "1984"
-        );
+    @Test
+    void getPageCount() {
+        assertEquals(PageCount, book1.getPageCount());
+        assertNotEquals(book1.getPageCount(), book2.getPageCount());
+        assertEquals(book2.getPageCount(), book3.getPageCount());
+    }
 
-        // Step 5: Assert that they are equal.
+    @Test
+    void setPageCount() {
+        book4.setPageCount(PageCount_);
+        assertNotEquals(PageCount, book4.getPageCount());
+        assertEquals(PageCount_, book4.getPageCount());
+    }
+
+    @Test
+    void getAuthor() {
+        assertEquals(Author, book1.getAuthor());
+        assertNotEquals(book1.getAuthor(), book2.getAuthor());
+        assertEquals(book2.getAuthor(), book3.getAuthor());
+    }
+
+    @Test
+    void setAuthor() {
+        book4.setAuthor(Author_);
+        assertNotEquals(Author, book4.getAuthor());
+        assertEquals(Author_, book4.getAuthor());
+    }
+
+    @Test
+    void getDueDate() {
+        assertEquals(DueDate, book1.getDueDate());
+        assertNotEquals(book1.getDueDate(), book2.getDueDate());
+        assertEquals(book2.getDueDate(), book3.getDueDate());
+    }
+
+    @Test
+    void setDueDate() {
+        book4.setDueDate(DueDate_);
+        assertNotEquals(DueDate, book4.getDueDate());
+        assertEquals(DueDate_, book4.getDueDate());
+    }
+
+    @Test
+    void testEquals() {
+        // Create a book with the same values as book1
+        Book bookWithSameValues = new Book(ISBN, Title, Subject, PageCount, Author, DueDate);
+        // Assert that they are equal.
         assertEquals(book1, bookWithSameValues, "Two distinct book objects with the same data should be equal.");
     }
 
