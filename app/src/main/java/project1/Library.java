@@ -72,7 +72,37 @@ public class Library {
         return Code.SUCCESS;
     }
 
-    
+    public int listShelves(){
+        return listShelves(false);
+    }
+
+    public int listShelves(boolean showBooks){
+        if(showBooks){
+            for(Shelf shelf : shelves.values()){
+                // Lists the books of every shelf
+                shelf.listBooks();
+            }
+        }
+        else{
+            for(Shelf shelf : shelves.values()){
+                // Displays the toString of every Shelf
+                System.out.println(shelf.toString());
+            }
+        }
+        //Return number of shelves in library
+        return shelves.size();
+    }
+
+    public int listBooks(){
+        int bookCount = 0;
+        for(HashMap<Book,Integer> book : books.entrySet()){
+            System.out.println(book.get + " copies of " +book.toString());
+            bookCount += book.getValue();
+        }
+        //Return number of unique books in library
+        return books.size();
+    }
+
     private Code errorCode(int codeNumber) {
         for (Code code : Code.values()) {
         if (code.getCode() == codeNumber) {
