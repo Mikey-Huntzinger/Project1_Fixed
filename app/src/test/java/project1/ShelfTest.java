@@ -6,6 +6,8 @@
     Author: Andrea Ultreras
     Date: 03/01/21
  */
+
+package project1;
 import Utilities.Code;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
