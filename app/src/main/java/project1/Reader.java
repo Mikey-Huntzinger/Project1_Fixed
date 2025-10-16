@@ -99,6 +99,6 @@ public class Reader {
 
     @Override
     public String toString(){
-        return getName() + " (#" + getCardNumber() + ") has checked out " + getBooks();
+        return getName() + " (#" + getCardNumber() + ") has the following books: " + getBooks();
     }
 }

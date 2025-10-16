@@ -95,12 +95,36 @@ public class Library {
 
     public int listBooks(){
         int bookCount = 0;
-        for(HashMap<Book,Integer> book : books.entrySet()){
-            System.out.println(book.get + " copies of " +book.toString());
-            bookCount += book.getValue();
+        for(Book book : books.keySet()){
+            System.out.println(books.get(book) + " copies of " +books.toString());
+            bookCount += books.get(book);
         }
         //Return number of unique books in library
-        return books.size();
+        return bookCount;
+    }
+
+    public int listReaders(){
+        // This method calls the overloaded listReaders method with 'false'
+        // to print readers without their checked-out books.
+        return listReaders(false);
+    }
+
+    public int listReaders(boolean showBooks){
+        // Loop through each reader in the list of readers.
+        for (Reader reader : readers){
+            // Check if we should display the books for the reader.
+            if(showBooks){
+                // If true, print the reader's name and card number, followed by a header for the book list on a new line.
+                System.out.println(reader.getName() + "(#" + reader.getCardNumber() + ") has the following books:");
+                // Print the list of books returned by the reader's getBooks() method.
+                System.out.println(reader.getBooks());
+            } else {
+                // If false, print only the reader's name and card number on a single line.
+                System.out.println(reader.getName() + " (#" + reader.getCardNumber() + ")");
+            }
+        }
+        // Return the total number of readers in the library.
+        return readers.size();
     }
 
     private Code errorCode(int codeNumber) {
