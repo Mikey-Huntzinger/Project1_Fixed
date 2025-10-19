@@ -127,6 +127,15 @@ public class Library {
         return readers.size();
     }
 
+    // Init Books,Shelves,Reader
+
+    //This method takes an integer, the number of books to parse, and a Scanner.
+    //The scanner represents the current position of the CSV file that is being parsed.
+    public Code initBooks(int bookCount, Scanner scan){
+        if (bookCount<1) return Code.LIBRARY_ERROR;
+        
+    }
+
     private Code errorCode(int codeNumber) {
         for (Code code : Code.values()) {
         if (code.getCode() == codeNumber) {
