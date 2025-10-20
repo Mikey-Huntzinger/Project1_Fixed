@@ -17,7 +17,39 @@ public class Library {
     private HashMap<String,Shelf> shelves;
     private HashMap<Book,Integer> books;
 
-    //Constructor
+    /**
+     * Converts a String to an int, handling NumberFormatException and printing error messages as specified.
+     * @param recordCountString The string to convert
+     * @param code The Code object for error context
+     * @return The integer value, or the error code if conversion fails
+     */
+    public static int convertInt(String recordCountString, Code code) {
+        try {
+            return Integer.parseInt(recordCountString);
+        } catch (NumberFormatException e) {
+            System.out.println("Value which caused the error: " + recordCountString);
+            System.out.println("Error message: " + code.getMessage());
+            switch (code) {
+                case BOOK_COUNT_ERROR:
+                    System.out.println("Error: Could not read number of books");
+                    break;
+                case PAGE_COUNT_ERROR:
+                    System.out.println("Error: could not parse page count");
+                    break;
+                case DATE_CONVERSION_ERROR:
+                    System.out.println("Error: Could not parse date component");
+                    break;
+                default:
+                    System.out.println("Error: Unknown conversion error");
+            }
+            return code.getCode();
+        }
+    }
+
+    /**
+     * Constructs a Library with the given name.
+     * @param name The name of the library
+     */
     public Library(String name){
         this.name = name;
         this.readers = new ArrayList<>();
@@ -25,6 +57,11 @@ public class Library {
         this.books = new HashMap<>();
     }
 
+    /**
+     * Initializes the library from a CSV file.
+     * @param filename The name of the CSV file
+     * @return Code indicating success or error type
+     */
     public Code init(String filename){
         File file = new File(filename);
         Scanner scanner;
@@ -74,10 +111,19 @@ public class Library {
         return Code.SUCCESS;
     }
 
+    /**
+     * Returns the number of shelves in the library.
+     * @return Number of shelves
+     */
     public int listShelves(){
         return listShelves(false);
     }
 
+    /**
+     * Lists shelves and optionally their books.
+     * @param showBooks If true, lists books on each shelf
+     * @return Number of shelves
+     */
     public int listShelves(boolean showBooks){
         if(showBooks){
             for(Shelf shelf : shelves.values()){
@@ -95,6 +141,10 @@ public class Library {
         return shelves.size();
     }
 
+    /**
+     * Lists all books in the library and returns the total count.
+     * @return Total number of books
+     */
     public int listBooks(){
         int bookCount = 0;
         for(Book book : books.keySet()){
@@ -105,12 +155,21 @@ public class Library {
         return bookCount;
     }
 
+    /**
+     * Lists all readers in the library.
+     * @return Number of readers
+     */
     public int listReaders(){
         // This method calls the overloaded listReaders method with 'false'
         // to print readers without their checked-out books.
         return listReaders(false);
     }
 
+    /**
+     * Lists readers and optionally their checked-out books.
+     * @param showBooks If true, lists books for each reader
+     * @return Number of readers
+     */
     public int listReaders(boolean showBooks){
         // Loop through each reader in the list of readers.
         for (Reader reader : readers){
@@ -133,6 +192,12 @@ public class Library {
 
     //This method takes an integer, the number of books to parse, and a Scanner.
     //The scanner represents the current position of the CSV file that is being parsed.
+    /**
+     * Initializes books from the CSV file.
+     * @param bookCount Number of books to parse
+     * @param scan Scanner for reading file
+     * @return Code indicating success or error type
+     */
     public Code initBooks(int bookCount, Scanner scan){
         if (bookCount<1) return Code.LIBRARY_ERROR;
         
@@ -174,6 +239,12 @@ public class Library {
 
     }
 
+    /**
+     * Initializes shelves from the CSV file.
+     * @param shelfCount Number of shelves to parse
+     * @param scan Scanner for reading file
+     * @return Code indicating success or error type
+     */
     public Code initShelves(int shelfCount, Scanner scan){
         if(shelfCount<1) return Code.SHELF_COUNT_ERROR;
 
@@ -197,6 +268,12 @@ public class Library {
         return Code.SUCCESS;
     }
 
+    /**
+     * Initializes readers from the CSV file.
+     * @param readerCount Number of readers to parse
+     * @param scan Scanner for reading file
+     * @return Code indicating success or error type
+     */
     public Code initReader(int readerCount,Scanner scan){
         if(readerCount<1) return Code.READER_COUNT_ERROR;
         for(int i =0;i<readerCount;i++){
@@ -248,6 +325,11 @@ public class Library {
         return Code.SUCCESS;
     }
 
+    /**
+     * Adds a book to the library inventory and shelf if possible.
+     * @param newBook The book to add
+     * @return Code indicating success or error type
+     */
     public Code addBook(Book newBook){
         if(books.containsKey(newBook)){
             books.put(newBook, books.get(newBook) + 1);
@@ -270,11 +352,21 @@ public class Library {
 
 
 
+    /**
+     * Adds a new shelf by subject.
+     * @param shelfSubject The subject of the shelf
+     * @return Code indicating success or error type
+     */
     public Code addShelf(String shelfSubject) {
         Shelf newShelf = new Shelf(shelves.size() + 1, shelfSubject);
         return addShelf(newShelf);
     }
 
+    /**
+     * Adds a shelf to the library if it does not already exist.
+     * @param shelf The shelf to add
+     * @return Code indicating success or error type
+     */
     public Code addShelf(Shelf shelf) {
         if (shelves.containsKey(shelf.getSubject())) {
             System.out.println("ERROR: Shelf already exists [" + shelf + "]");
@@ -297,6 +389,11 @@ public class Library {
         return Code.SUCCESS;
     }
 
+    /**
+     * Adds a reader to the library.
+     * @param reader The reader to add
+     * @return Code indicating success or error type
+     */
     public Code addReader(Reader reader){
         if(readers.contains(reader)) { //if readers already has the reader
             System.out.println("["+reader.getName()+"] already has an account!");
@@ -322,6 +419,11 @@ public class Library {
         return Code.SUCCESS;
     }
 
+    /**
+     * Removes a reader from the library if they have no books checked out.
+     * @param reader The reader to remove
+     * @return Code indicating success or error type
+     */
     public Code removeReader(Reader reader){
         if(!readers.contains(reader)){
             System.out.println("["+reader.getName()+"]\n is not a part of this library");
@@ -331,8 +433,26 @@ public class Library {
             System.out.println("["+reader.getName()+"] must return all books!");
             return Code.READER_STILL_HAS_BOOKS_ERROR;
         }
-        
 
+        readers.remove(reader);
+        return Code.SUCCESS;
+    }
+
+    /**
+     * Converts a String to an int, handling NumberFormatException and printing error messages as specified.
+     * @param str The string to convert
+     * @param code The Code object for error context
+     * @return The integer value, or the error code if conversion fails
+     */
+    public static int convertInt(String str, Code code){
+        
+    }
+
+    /**
+     * Returns the Code object associated with a code number.
+     * @param codeNumber The code number
+     * @return The corresponding Code object, or Code.UNKNOWN_ERROR if not found
+     */
     private Code errorCode(int codeNumber) {
         for (Code code : Code.values()) {
         if (code.getCode() == codeNumber) {
