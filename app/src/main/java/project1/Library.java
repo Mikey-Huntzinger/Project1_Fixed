@@ -1,3 +1,10 @@
+/**
+ * Author: Michael Huntzinger
+ * Date: 10/20/2025
+ * CST338 - Project 1
+ * Description: Library management system 
+ */
+
 package project1;
 
 import java.io.File;
@@ -127,7 +134,8 @@ public class Library {
      * @return Code indicating success or error type
      */
     public Code init(String filename){
-        File file = new File(filename);
+        File file = new File("../CSV/" + filename);
+        
         Scanner scanner;
         try {
             scanner = new Scanner(file);
