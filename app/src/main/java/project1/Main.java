@@ -1,3 +1,4 @@
+package project1;
 import java.time.LocalDate;
 
 /**
@@ -8,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         Library csumb = new Library("CSUMB");
-        csumb.init("Library01.csv");
+        csumb.init("app/src/main/java/project1/CSV/Library01.csv");
         int numb = csumb.listBooks();
         System.out.println("total books: " + numb);
         numb = csumb.listReaders();
