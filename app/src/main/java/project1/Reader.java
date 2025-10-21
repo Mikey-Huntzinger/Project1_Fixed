@@ -4,11 +4,11 @@ import java.util.List;
 // import project1.Code; // Removed because Code class does not exist or cannot be resolved
 
 public class Reader {
-    public static int CARD_NUMBER_;
-    public static int NAME_;
-    public static int PHONE_;
-    public static int BOOK_COUNT_;
-    public static int BOOK_START_;
+    public static int CARD_NUMBER_=0;
+    public static int NAME_=1;
+    public static int PHONE_=2;
+    public static int BOOK_COUNT_=3;
+    public static int BOOK_START_=4;
 
     private int cardNumber;
     private String name;
@@ -99,6 +99,6 @@ public class Reader {
 
     @Override
     public String toString(){
-        return getName() + " (#" + getCardNumber() + ") has checked out " + getBooks();
+        return getName() + " (#" + getCardNumber() + ") has the following books: " + getBooks();
     }
 }
