@@ -13,6 +13,8 @@ public class Library {
     
     public static final int LENDING_LIMIT = 5;
     private String name;
+    
+    
     private static int libraryCard;
     private List<Reader> readers;
     private HashMap<String,Shelf> shelves;
@@ -109,6 +111,14 @@ public class Library {
         this.readers = new ArrayList<>();
         this.shelves = new HashMap<>();
         this.books = new HashMap<>();
+    }
+
+    /**
+     * Gets the name of the library.
+     * @return The library name
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -264,7 +274,7 @@ public class Library {
             String line = scan.nextLine();
             String[] bookData = line.split(",");
 
-            if(bookData.length != Book.DUE_DATE_){
+            if(bookData.length != Book.DUE_DATE_+1){
                 return Code.BOOK_RECORD_COUNT_ERROR;
             }
             //Initialize Values from bookData
